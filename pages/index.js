@@ -14,25 +14,32 @@ import settings from "../settings.json"
 
 export const App = () => {
   const cityInput = settings.city;
+  const [geoData, setGeoData] = useState();
   const [weatherData, setWeatherData] = useState();
   const [unitSystem, setUnitSystem] = useState("metric");
 
   useEffect(() => {
     const getData = async () => {
+
       const res1 = await fetch("api/geocode", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cityInput }),
       });
       const geo = await res1.json();
+      setGeoData({...geo});
 
       if (geo.results && geo.results[0].name) {
+        let result = geo.results[0];
+        console.log(result.latitude, result.longitude);
+
         const res2 = await fetch("api/data", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ cityInput }),
         });
         const data = await res2.json();
+
         setWeatherData({ ...data });
 
       } else {
@@ -51,10 +58,10 @@ export const App = () => {
   return weatherData && !weatherData.message ? (
     <div className={styles.wrapper}>
       <MainCard
-        city={weatherData.name}
-        country={weatherData.sys.country}
-        description={weatherData.weather[0].description}
-        iconName={weatherData.weather[0].icon}
+        city={geoData.name}
+        country={geoData.country}
+        description={"weatherData.weather[0].description"}
+        iconName={weatherData.weather[0].icon} // WIP
         unitSystem={unitSystem}
         weatherData={weatherData}
       />
