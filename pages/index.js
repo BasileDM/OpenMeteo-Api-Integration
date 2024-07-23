@@ -10,23 +10,36 @@ import { LoadingScreen } from "../components/LoadingScreen";
 import { ErrorScreen } from "../components/ErrorScreen";
 
 import styles from "../styles/Home.module.css";
-import json from "../settings.json"
+import settings from "../settings.json"
 
 export const App = () => {
-  const cityInput = json.city;
+  const cityInput = settings.city;
   const [weatherData, setWeatherData] = useState();
   const [unitSystem, setUnitSystem] = useState("metric");
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch("api/data", {
+      const res1 = await fetch("api/geocode", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cityInput }),
       });
-      const data = await res.json();
-      setWeatherData({ ...data });
+      const geo = await res1.json();
+
+      if (geo.results && geo.results[0].name) {
+        const res2 = await fetch("api/data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cityInput }),
+        });
+        const data = await res2.json();
+        setWeatherData({ ...data });
+
+      } else {
+        setWeatherData({ message: "404" });
+      }
     };
+
     getData();
   }, []);
 
