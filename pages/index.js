@@ -4,7 +4,6 @@ import { MainCard } from "../components/MainCard";
 import { ContentBox } from "../components/ContentBox";
 import { Header } from "../components/Header";
 import { DateAndTime } from "../components/DateAndTime";
-import { Search } from "../components/Search";
 import { MetricsBox } from "../components/MetricsBox";
 import { UnitSwitch } from "../components/UnitSwitch";
 import { LoadingScreen } from "../components/LoadingScreen";
@@ -14,8 +13,6 @@ import styles from "../styles/Home.module.css";
 
 export const App = () => {
   const cityInput = "Bordeaux";
-  // const [cityInput, setCityInput] = useState("Riga");
-  const [triggerFetch, setTriggerFetch] = useState(true);
   const [weatherData, setWeatherData] = useState();
   const [unitSystem, setUnitSystem] = useState("metric");
 
@@ -30,7 +27,7 @@ export const App = () => {
       setWeatherData({ ...data });
     };
     getData();
-  }, [triggerFetch]);
+  }, []);
 
   const changeSystem = () =>
     unitSystem == "metric"
