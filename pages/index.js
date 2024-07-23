@@ -10,9 +10,10 @@ import { LoadingScreen } from "../components/LoadingScreen";
 import { ErrorScreen } from "../components/ErrorScreen";
 
 import styles from "../styles/Home.module.css";
+import json from "../settings.json"
 
 export const App = () => {
-  const cityInput = "Bordeaux";
+  const cityInput = json.city;
   const [weatherData, setWeatherData] = useState();
   const [unitSystem, setUnitSystem] = useState("metric");
 
@@ -53,7 +54,7 @@ export const App = () => {
       </ContentBox>
     </div>
   ) : weatherData && weatherData.message ? (
-    <ErrorScreen errorMessage="City not found, try again!">
+    <ErrorScreen errorMessage="City not found, check your configuration file!">
     </ErrorScreen>
   ) : (
     <LoadingScreen loadingMessage="Loading data..." />
