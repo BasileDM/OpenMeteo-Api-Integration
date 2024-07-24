@@ -7,7 +7,6 @@ import {
 } from "../services/helpers";
 import { MetricsCard } from "./MetricsCard";
 import styles from "./MetricsBox.module.css";
-import { DateAndTime } from "./DateAndTime";
 
 export const MetricsBox = ({ weatherData, unitSystem }) => {
   return (
@@ -41,12 +40,12 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
         metric={getTime(
           unitSystem,
           weatherData.daily.sunrise,
-          weatherData.timezone
+          weatherData.utc_offset_seconds
         )}
         unit={getAMPM(
           unitSystem,
           weatherData.daily.sunrise,
-          weatherData.geoData.timezone
+          weatherData.utc_offset_seconds
         )}
       />
       <MetricsCard
@@ -55,9 +54,9 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
         metric={getTime(
           unitSystem,
           weatherData.daily.sunset,
-          weatherData.timezone
+          weatherData.utc_offset_seconds
         )}
-        unit={getAMPM(unitSystem, weatherData.daily.sunset, weatherData.geoData.timezone)}
+        unit={getAMPM(unitSystem, weatherData.daily.sunset, weatherData.utc_offset_seconds)}
       />
     </div>
   );

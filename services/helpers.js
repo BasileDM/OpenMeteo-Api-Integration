@@ -14,12 +14,10 @@ export const getVisibility = (unitSystem, visibilityInMeters) =>
     : kmToMiles(visibilityInMeters / 1000);
 
 export const getTime = (unitSystem, currentDate, timezone) => {
-  let hours = new Date(currentDate).getHours();
-  let minutes = new Date(currentDate).getMinutes();
-  let currentTime = `${hours}:${minutes}`;
-  
+  let currentTimeMs = new Date(currentDate).getTime();
+  let currentTime = Math.floor(currentTimeMs / 1000);
   return unitSystem == "metric"
-    ? currentTime
+    ? unixToLocalTime(currentTime, timezone)
     : timeTo12HourFormat(currentTime, timezone);
 }
 
