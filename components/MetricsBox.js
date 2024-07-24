@@ -22,7 +22,7 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
         title={"Wind speed"}
         iconSrc={"/icons/wind.png"}
         metric={getWindSpeed(unitSystem, weatherData.current.wind_speed_10m)}
-        unit={unitSystem == "metric" ? "m/s" : "m/h"}
+        unit={unitSystem == "metric" ? "Km/h" : "m/h"}
       />
       <MetricsCard
         title={"Wind direction"}
