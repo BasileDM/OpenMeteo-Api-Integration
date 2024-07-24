@@ -11,6 +11,7 @@ import { ErrorScreen } from "../components/ErrorScreen";
 
 import styles from "../styles/Home.module.css";
 import settings from "../settings.json"
+import { getWeatherCodeAttributes } from "../services/helpers";
 
 export const App = () => {
   const cityInput = settings.city;
@@ -18,50 +19,57 @@ export const App = () => {
   const [weatherData, setWeatherData] = useState();
   const [unitSystem, setUnitSystem] = useState("metric");
 
+  // Send city name to the OpenMeteo's GeoCode API get latitude and longitude
   useEffect(() => {
-    const getData = async () => {
-
+    const getGeoData = async () => {
       const res1 = await fetch("api/geocode", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cityInput }),
       });
       const geo = await res1.json();
-      setGeoData({...geo});
-
+      
       if (geo.results && geo.results[0].name) {
-        let result = geo.results[0];
-        console.log(result.latitude, result.longitude);
-
-        const res2 = await fetch("api/data", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ cityInput }),
-        });
-        const data = await res2.json();
-
-        setWeatherData({ ...data });
-
+        setGeoData({...geo.results[0]});
+        console.log(geo.results[0]);
       } else {
-        setWeatherData({ message: "404" });
+        setWeatherData({ error: "404" });
       }
     };
 
-    getData();
+    getGeoData();
   }, []);
+
+  // Send latitude and longitude to the OpenMeteo weather API to get weather info
+  useEffect(() => {
+    const getWeatherData = async () => {
+      if (geoData) {
+        const res2 = await fetch("api/data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ geoData }),
+        });
+        const data = await res2.json();
+        const codeAttributes = getWeatherCodeAttributes(data.current.weather_code);
+        setWeatherData({ ...data, codeAttributes });
+      }
+    };
+    
+    getWeatherData();
+  }, [geoData]);
 
   const changeSystem = () =>
     unitSystem == "metric"
       ? setUnitSystem("imperial")
       : setUnitSystem("metric");
 
-  return weatherData && !weatherData.message ? (
+  return weatherData && !weatherData.error ? (
     <div className={styles.wrapper}>
       <MainCard
         city={geoData.name}
         country={geoData.country}
-        description={"weatherData.weather[0].description"}
-        iconName={weatherData.weather[0].icon} // WIP
+        description={weatherData.codeAttributes.description}
+        iconName={weatherData.codeAttributes.iconName}
         unitSystem={unitSystem}
         weatherData={weatherData}
       />
@@ -73,7 +81,7 @@ export const App = () => {
         <UnitSwitch onClick={changeSystem} unitSystem={unitSystem} />
       </ContentBox>
     </div>
-  ) : weatherData && weatherData.message ? (
+  ) : weatherData && weatherData.error ? (
     <ErrorScreen errorMessage="City not found, check your configuration file!">
     </ErrorScreen>
   ) : (
