@@ -1,12 +1,12 @@
 import {
   unixToLocalTime,
   kmToMiles,
-  mpsToMph,
+  kmphToMph,
   timeTo12HourFormat,
 } from "./converters";
 
-export const getWindSpeed = (unitSystem, windInMps) =>
-  unitSystem == "metric" ? windInMps : mpsToMph(windInMps);
+export const getWindSpeed = (unitSystem, windInKmph) =>
+  unitSystem == "metric" ? windInKmph  : kmphToMph(windInKmph);
 
 export const getVisibility = (unitSystem, visibilityInMeters) =>
   unitSystem == "metric"
@@ -24,8 +24,8 @@ export const getTime = (unitSystem, currentDate, timezone) => {
 export const getAMPM = (unitSystem, currentTime, timezone) =>
   unitSystem === "imperial"
     ? unixToLocalTime(currentTime, timezone).split(":")[0] >= 12
-      ? "AM"
-      : "PM"
+      ? "PM"
+      : "AM"
     : "";
 
 export const getWeekDay = (weatherData) => {

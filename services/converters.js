@@ -1,6 +1,6 @@
 export const ctoF = (c) => (c * 9) / 5 + 32;
 
-export const mpsToMph = (mps) => (mps * 2.236936).toFixed(2);
+export const kmphToMph = (kmph) => (kmph * 0.621371).toFixed(2);
 
 export const kmToMiles = (km) => (km / 1.609).toFixed(1);
 
