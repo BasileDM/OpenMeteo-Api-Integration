@@ -7,7 +7,6 @@ import {
 } from "../services/helpers";
 import { MetricsCard } from "./MetricsCard";
 import styles from "./MetricsBox.module.css";
-import { DateAndTime } from "./DateAndTime";
 
 export const MetricsBox = ({ weatherData, unitSystem }) => {
   return (
@@ -22,7 +21,7 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
         title={"Wind speed"}
         iconSrc={"/icons/wind.png"}
         metric={getWindSpeed(unitSystem, weatherData.current.wind_speed_10m)}
-        unit={unitSystem == "metric" ? "m/s" : "m/h"}
+        unit={unitSystem == "metric" ? "Km/h" : "mph"}
       />
       <MetricsCard
         title={"Wind direction"}
@@ -33,20 +32,20 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
         title={"Visibility"}
         iconSrc={"/icons/binocular.png"}
         metric={getVisibility(unitSystem, weatherData.hourly.visibility[new Date().getHours()])}
-        unit={unitSystem == "metric" ? "km" : "miles"}
+        unit={unitSystem == "metric" ? "Km" : "miles"}
       />
       <MetricsCard
         title={"Sunrise"}
         iconSrc={"/icons/sunrise.png"}
         metric={getTime(
           unitSystem,
-          weatherData.daily.sunrise,
-          weatherData.timezone
+          weatherData.daily.sunrise[0],
+          weatherData.utc_offset_seconds
         )}
         unit={getAMPM(
           unitSystem,
-          weatherData.daily.sunrise,
-          weatherData.geoData.timezone
+          weatherData.daily.sunrise[0],
+          weatherData.utc_offset_seconds
         )}
       />
       <MetricsCard
@@ -54,10 +53,10 @@ export const MetricsBox = ({ weatherData, unitSystem }) => {
         iconSrc={"/icons/sunset.png"}
         metric={getTime(
           unitSystem,
-          weatherData.daily.sunset,
-          weatherData.timezone
+          weatherData.daily.sunset[0],
+          weatherData.utc_offset_seconds
         )}
-        unit={getAMPM(unitSystem, weatherData.daily.sunset, weatherData.geoData.timezone)}
+        unit={getAMPM(unitSystem, weatherData.daily.sunset[0], weatherData.utc_offset_seconds)}
       />
     </div>
   );

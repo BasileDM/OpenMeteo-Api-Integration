@@ -1,6 +1,6 @@
 export const ctoF = (c) => (c * 9) / 5 + 32;
 
-export const mpsToMph = (mps) => (mps * 2.236936).toFixed(2);
+export const kmphToMph = (kmph) => (kmph * 0.621371).toFixed(2);
 
 export const kmToMiles = (km) => (km / 1.609).toFixed(1);
 
@@ -33,9 +33,24 @@ export const degToCompass = (num) => {
 };
 
 export const unixToLocalTime = (unixSeconds, timezone) => {
-  let time = new Date((unixSeconds + timezone) * 1000)
+  try {
+    let time = new Date((unixSeconds + timezone) * 1000)
+    .toISOString()
+    .match(/(\d{2}:\d{2})/)[0];
+    
+    return time.startsWith("0") ? time.substring(1) : time;
+  }
+  catch (e) {
+    console.log(unixSeconds);
+    unixSeconds = unixSeconds[0];
+    unixSeconds = new Date(unixSeconds).getTime();
+    let time = new Date((unixSeconds + timezone) * 1000)
     .toISOString()
     .match(/(\d{2}:\d{2})/)[0];
 
-  return time.startsWith("0") ? time.substring(1) : time;
+    return time.startsWith("0") ? time.substring(1) : time;
+  }
+
 };
+
+export const getUnixSeconds = (date) => Math.floor(new Date(date).getTime() / 1000);

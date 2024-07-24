@@ -31,7 +31,6 @@ export const App = () => {
       
       if (geo.results && geo.results[0].name) {
         setGeoData({...geo.results[0]});
-        console.log(geo.results[0]);
       } else {
         setWeatherData({ error: "404" });
       }
@@ -61,6 +60,12 @@ export const App = () => {
     
     getWeatherData();
   }, [geoData]);
+
+  useEffect(() => {
+    if (weatherData) {
+      console.log(weatherData);
+    }
+  }, [weatherData]);
 
   const changeSystem = () =>
     unitSystem == "metric"
