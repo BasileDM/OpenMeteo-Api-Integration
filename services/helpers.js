@@ -15,10 +15,18 @@ export const getVisibility = (unitSystem, visibilityInMeters) =>
     : kmToMiles(visibilityInMeters / 1000);
 
 export const getTime = (unitSystem, currentDate, timezone) => {
+  console.log(currentDate);
+
   let currentTime = getUnixSeconds(currentDate);
+
+  console.log(currentTime);
+  
+  const localTime = unixToLocalTime(currentTime, timezone);
+  console.log(localTime);
+
   return unitSystem == "metric"
-    ? unixToLocalTime(currentTime, timezone)
-    : timeTo12HourFormat(unixToLocalTime(currentTime, timezone));
+    ? localTime
+    : timeTo12HourFormat(localTime);
 }
 
 export const getAMPM = (unitSystem, currentDate, timezone) => {
