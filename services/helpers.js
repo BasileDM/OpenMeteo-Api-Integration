@@ -3,6 +3,7 @@ import {
   kmToMiles,
   kmphToMph,
   timeTo12HourFormat,
+  getUnixSeconds
 } from "./converters";
 
 export const getWindSpeed = (unitSystem, windInKmph) =>
@@ -14,19 +15,20 @@ export const getVisibility = (unitSystem, visibilityInMeters) =>
     : kmToMiles(visibilityInMeters / 1000);
 
 export const getTime = (unitSystem, currentDate, timezone) => {
-  let currentTimeMs = new Date(currentDate).getTime();
-  let currentTime = Math.floor(currentTimeMs / 1000);
+  let currentTime = getUnixSeconds(currentDate);
   return unitSystem == "metric"
     ? unixToLocalTime(currentTime, timezone)
     : timeTo12HourFormat(unixToLocalTime(currentTime, timezone));
 }
 
-export const getAMPM = (unitSystem, currentTime, timezone) =>
-  unitSystem === "imperial"
+export const getAMPM = (unitSystem, currentDate, timezone) => {
+  let currentTime = getUnixSeconds(currentDate);
+  return unitSystem === "imperial"
     ? unixToLocalTime(currentTime, timezone).split(":")[0] >= 12
       ? "PM"
       : "AM"
     : "";
+}
 
 export const getWeekDay = (weatherData) => {
   const weekday = [
