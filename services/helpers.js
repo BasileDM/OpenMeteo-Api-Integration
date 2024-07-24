@@ -13,10 +13,15 @@ export const getVisibility = (unitSystem, visibilityInMeters) =>
     ? (visibilityInMeters / 1000).toFixed(1)
     : kmToMiles(visibilityInMeters / 1000);
 
-export const getTime = (unitSystem, currentTime, timezone) =>
-  unitSystem == "metric"
+export const getTime = (unitSystem, currentDate, timezone) => {
+  let hours = new Date(currentDate).getHours();
+  let minutes = new Date(currentDate).getMinutes();
+  let currentTime = `${hours}:${minutes}`;
+  
+  return unitSystem == "metric"
     ? currentTime
     : timeTo12HourFormat(currentTime, timezone);
+}
 
 export const getAMPM = (unitSystem, currentTime, timezone) =>
   unitSystem === "imperial"

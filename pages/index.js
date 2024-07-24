@@ -55,16 +55,17 @@ export const App = () => {
           description: codeAttributes.description, 
           iconName: codeAttributes.iconName, 
           geoData: geoData });
-          console.log({ 
-            ...data, 
-            description: codeAttributes.description, 
-            iconName: codeAttributes.iconName, 
-            geoData: geoData });
       }
     };
     
     getWeatherData();
   }, [geoData]);
+
+  useEffect(() => {
+    if (weatherData) {
+      console.log(weatherData);
+    }
+  }, [weatherData]);
 
   const changeSystem = () =>
     unitSystem == "metric"
