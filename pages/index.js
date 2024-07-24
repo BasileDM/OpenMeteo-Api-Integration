@@ -51,7 +51,7 @@ export const App = () => {
         });
         const data = await res2.json();
         const codeAttributes = getWeatherCodeAttributes(data.current.weather_code);
-        setWeatherData({ ...data, codeAttributes });
+        setWeatherData({ ...data, description: codeAttributes.description, iconName: codeAttributes.iconName });
       }
     };
     
@@ -68,8 +68,8 @@ export const App = () => {
       <MainCard
         city={geoData.name}
         country={geoData.country}
-        description={weatherData.codeAttributes.description}
-        iconName={weatherData.codeAttributes.iconName}
+        description={weatherData.description}
+        iconName={weatherData.iconName}
         unitSystem={unitSystem}
         weatherData={weatherData}
       />
