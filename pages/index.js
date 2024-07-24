@@ -51,7 +51,11 @@ export const App = () => {
         });
         const data = await res2.json();
         const codeAttributes = getWeatherCodeAttributes(data.current.weather_code);
-        setWeatherData({ ...data, description: codeAttributes.description, iconName: codeAttributes.iconName });
+        setWeatherData({ 
+          ...data, 
+          description: codeAttributes.description, 
+          iconName: codeAttributes.iconName, 
+          geoData: geoData });
       }
     };
     

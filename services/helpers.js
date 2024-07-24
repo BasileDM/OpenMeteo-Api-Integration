@@ -15,8 +15,8 @@ export const getVisibility = (unitSystem, visibilityInMeters) =>
 
 export const getTime = (unitSystem, currentTime, timezone) =>
   unitSystem == "metric"
-    ? unixToLocalTime(currentTime, timezone)
-    : timeTo12HourFormat(unixToLocalTime(currentTime, timezone));
+    ? currentTime
+    : timeTo12HourFormat(currentTime, timezone);
 
 export const getAMPM = (unitSystem, currentTime, timezone) =>
   unitSystem === "imperial"
