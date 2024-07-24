@@ -31,7 +31,6 @@ export const App = () => {
       
       if (geo.results && geo.results[0].name) {
         setGeoData({...geo.results[0]});
-        console.log(geo.results[0]);
       } else {
         setWeatherData({ error: "404" });
       }
@@ -56,6 +55,11 @@ export const App = () => {
           description: codeAttributes.description, 
           iconName: codeAttributes.iconName, 
           geoData: geoData });
+          console.log({ 
+            ...data, 
+            description: codeAttributes.description, 
+            iconName: codeAttributes.iconName, 
+            geoData: geoData });
       }
     };
     
