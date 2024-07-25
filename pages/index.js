@@ -76,7 +76,7 @@ export const App = () => {
     <div className={styles.wrapper}>
       <MainCard
         city={geoData.name}
-        country={geoData.country}
+        country={geoData.country_code}
         description={weatherData.description}
         iconName={weatherData.iconName}
         unitSystem={unitSystem}
