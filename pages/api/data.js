@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
   const { latitude, longitude, timezone } = req.body.geoData;
-  console.log(timezone);
   const getWeatherData = await fetch(
     `https://api.open-meteo.com/v1/forecast?` +
     `latitude=${latitude}&longitude=${longitude}&timezone=${timezone}&` +

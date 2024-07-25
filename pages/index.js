@@ -49,11 +49,14 @@ export const App = () => {
           body: JSON.stringify({ geoData }),
         });
         const data = await res2.json();
-        const codeAttributes = getWeatherCodeAttributes(data.current.weather_code);
+        const weatherCodeAttributes = getWeatherCodeAttributes(
+          data.current.weather_code, 
+          data.current.is_day
+        );
         setWeatherData({ 
           ...data, 
-          description: codeAttributes.description, 
-          iconName: codeAttributes.iconName, 
+          description: weatherCodeAttributes.description, 
+          iconName: weatherCodeAttributes.iconName, 
           geoData: geoData });
       }
     };
