@@ -77,5 +77,5 @@ export const getWeatherCodeAttributes = (code, isDay) => {
     99: { description: "Thunderstorm with heavy hail", iconName: isDay ? "11d" : "11n" },
   };
 
-  return codeAttributes[code] || { description: "Unknown weather code", iconName: "unknown" };
+  return codeAttributes[code] || { description: "No info :(", iconName: "question-mark" };
 };

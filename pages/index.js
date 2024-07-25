@@ -18,6 +18,15 @@ export const App = () => {
   const [geoData, setGeoData] = useState();
   const [weatherData, setWeatherData] = useState();
   const [unitSystem, setUnitSystem] = useState("metric");
+  const [timer, setTimer] = useState(0);
+
+  // Refresh timer
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((timer) => timer + 1);
+    }, 3600000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Send city name to the OpenMeteo's GeoCode API get latitude and longitude
   useEffect(() => {
@@ -40,6 +49,7 @@ export const App = () => {
   }, [cityInput]);
 
   // Send latitude and longitude to the OpenMeteo weather API to get weather info
+  // Fetches data every time the timer changes
   useEffect(() => {
     const getWeatherData = async () => {
       if (geoData) {
@@ -62,13 +72,7 @@ export const App = () => {
     };
     
     getWeatherData();
-  }, [geoData]);
-
-  useEffect(() => {
-    if (weatherData) {
-      console.log(weatherData);
-    }
-  }, [weatherData]);
+  }, [timer, geoData]);
 
   const changeSystem = () =>
     unitSystem == "metric"
