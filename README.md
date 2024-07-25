@@ -1,50 +1,46 @@
 # Weather-App-Integration
-Mini brief CDA
 
-# Weather App (Original README)
+Original app repo : https://github.com/madzadev/weather-app
 
-Check the current weather on any city on the planet. Switch between metric and imperial units.
-
-![Alt img](https://images.ctfassets.net/zlsyc9paq6sa/3uBrJ07WSM40FpolgjInHY/7d886cb4187b52194bf9b63c183a1d3a/1627637330_x.gif)
-
-## Features
-
-1. User's ability to search cities
-
-2. Current local time and date
-
-3. Temperatures and humidity
-
-4. Wind speed and direction
-
-5. Sunrise and sunset times
-
-6. Metric vs Imperial system
-
-7. Error handling and loading info
+This app keeps all the same features as the original app except for a few changes :
+- It integrates with OpenMeteo's API instead of the original OpenWeatherMap API.
+- It gets rid of the search function in favor of the ability to set the city in the settings.json file.
+- It refreshes the weather every hour.
 
 ## Installation
 
-1. `git clone https://github.com/madzadev/weather-app.git`
+1. `git clone https://github.com/BasileDM/OpenMeteo-Api-Integration.git`
 
-2. `cd weather-app`
+2. `cd OpenMeteo-Api-Integration`
 
-3. `npm install`
+3. `Node 16.13.2 was used for this project. You can download NVM here:`
+    - `Linux:   https://github.com/nvm-sh/nvm` 
+    - `Windows: https://github.com/coreybutler/nvm-windows`
 
-4. Log-in to [Openweathermap.com](https://openweathermap.org/)
+4. `nvm install v16.13.2`
 
-5. Create an API key
+5. `nvm use v16.13.2`
 
-6. `cp .env.example .env.local`
+6. `npm install`
 
-7. Paste API key for `OPENWEATHER_API_KEY`
+5. `Edit the settings.json file with the city of your choice`
 
 8. `npm run dev`
 
-## Contributions
+## Features
 
-Any feature requests and pull requests are welcome!
+1. User's ability to set a city in settings.json
 
-## License
+2. Timer refreshes the weather every hour
 
-The project is under [MIT license](https://choosealicense.com/licenses/mit/).
+3. Current local time and date
+
+4. Temperatures and humidity
+
+5. Wind speed and direction
+
+6. Sunrise and sunset times
+
+7. Metric vs Imperial system
+
+8. Error handling and loading info
