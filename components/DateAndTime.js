@@ -8,8 +8,8 @@ export const DateAndTime = ({ weatherData, unitSystem }) => {
         {`${getWeekDay(weatherData)}, ${getTime(
           unitSystem,
           weatherData.current.time,
-          weatherData.utc_offset_seconds,
-        )} ${getAMPM(unitSystem, weatherData.current.time, weatherData.utc_offset_seconds)}`}
+          weatherData.timezone,
+        )} ${getAMPM(unitSystem, weatherData.current.time, weatherData.timezone)}`}
       </h2>
     </div>
   );

@@ -18,6 +18,15 @@ export const App = () => {
   const [geoData, setGeoData] = useState();
   const [weatherData, setWeatherData] = useState();
   const [unitSystem, setUnitSystem] = useState("metric");
+  const [timer, setTimer] = useState(0);
+
+  // Refresh timer
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((timer) => timer + 1);
+    }, 3600000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Send city name to the OpenMeteo's GeoCode API get latitude and longitude
   useEffect(() => {
@@ -37,9 +46,10 @@ export const App = () => {
     };
 
     getGeoData();
-  }, []);
+  }, [cityInput]);
 
   // Send latitude and longitude to the OpenMeteo weather API to get weather info
+  // Fetches data every time the timer changes
   useEffect(() => {
     const getWeatherData = async () => {
       if (geoData) {
@@ -49,23 +59,20 @@ export const App = () => {
           body: JSON.stringify({ geoData }),
         });
         const data = await res2.json();
-        const codeAttributes = getWeatherCodeAttributes(data.current.weather_code);
+        const weatherCodeAttributes = getWeatherCodeAttributes(
+          data.current.weather_code, 
+          data.current.is_day
+        );
         setWeatherData({ 
           ...data, 
-          description: codeAttributes.description, 
-          iconName: codeAttributes.iconName, 
+          description: weatherCodeAttributes.description, 
+          iconName: weatherCodeAttributes.iconName, 
           geoData: geoData });
       }
     };
     
     getWeatherData();
-  }, [geoData]);
-
-  useEffect(() => {
-    if (weatherData) {
-      console.log(weatherData);
-    }
-  }, [weatherData]);
+  }, [timer, geoData]);
 
   const changeSystem = () =>
     unitSystem == "metric"
@@ -76,7 +83,7 @@ export const App = () => {
     <div className={styles.wrapper}>
       <MainCard
         city={geoData.name}
-        country={geoData.country}
+        country={geoData.country_code}
         description={weatherData.description}
         iconName={weatherData.iconName}
         unitSystem={unitSystem}
