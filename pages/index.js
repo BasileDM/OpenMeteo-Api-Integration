@@ -37,7 +37,7 @@ export const App = () => {
     };
 
     getGeoData();
-  }, []);
+  }, [cityInput]);
 
   // Send latitude and longitude to the OpenMeteo weather API to get weather info
   useEffect(() => {

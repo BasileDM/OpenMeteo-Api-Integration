@@ -1,5 +1,5 @@
 import {
-  unixToLocalTime,
+  dateToLocalTime,
   kmToMiles,
   kmphToMph,
   timeTo12HourFormat,
@@ -14,25 +14,17 @@ export const getVisibility = (unitSystem, visibilityInMeters) =>
     ? (visibilityInMeters / 1000).toFixed(1)
     : kmToMiles(visibilityInMeters / 1000);
 
-export const getTime = (unitSystem, currentDate, timezone) => {
-  console.log(currentDate);
-
-  let currentTime = getUnixSeconds(currentDate);
-
-  console.log(currentTime);
-  
-  const localTime = unixToLocalTime(currentTime, timezone);
-  console.log(localTime);
+export const getTime = (unitSystem, currentDate) => {
+  const localTime = dateToLocalTime(currentDate);
 
   return unitSystem == "metric"
     ? localTime
     : timeTo12HourFormat(localTime);
 }
 
-export const getAMPM = (unitSystem, currentDate, timezone) => {
-  let currentTime = getUnixSeconds(currentDate);
+export const getAMPM = (unitSystem, currentDate) => {
   return unitSystem === "imperial"
-    ? unixToLocalTime(currentTime, timezone).split(":")[0] >= 12
+    ? dateToLocalTime(currentDate).split(":")[0] >= 12
       ? "PM"
       : "AM"
     : "";

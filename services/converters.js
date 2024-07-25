@@ -9,6 +9,15 @@ export const timeTo12HourFormat = (time) => {
   return `${(hours %= 12) ? hours : 12}:${minutes}`;
 };
 
+export const dateToLocalTime = (currentDate) => {
+  let time = new Date(currentDate)
+  .toLocaleTimeString("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit"
+  })
+  return time.startsWith("0") ? time.substring(1) : time;
+};
+
 export const degToCompass = (num) => {
   var val = Math.round(num / 22.5);
   var arr = [
@@ -32,15 +41,3 @@ export const degToCompass = (num) => {
   return arr[val % 16];
 };
 
-export const unixToLocalTime = (unixSeconds, timezone) => {
-  let time = new Date(unixSeconds * 1000)
-  .toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: timezone
-  })
-  
-  return time.startsWith("0") ? time.substring(1) : time;
-};
-
-export const getUnixSeconds = (date) => Math.floor(new Date(date).getTime() / 1000);

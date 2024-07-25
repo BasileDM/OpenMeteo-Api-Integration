@@ -9,7 +9,7 @@ export const DateAndTime = ({ weatherData, unitSystem }) => {
           unitSystem,
           weatherData.current.time,
           weatherData.timezone,
-        )} ${getAMPM(unitSystem, weatherData.current.time, weatherData.utc_offset_seconds)}`}
+        )} ${getAMPM(unitSystem, weatherData.current.time, weatherData.timezone)}`}
       </h2>
     </div>
   );
