@@ -9,23 +9,23 @@ This app keeps all the same features as the original app except for a few change
 
 ## Installation
 
-1. `git clone https://github.com/BasileDM/OpenMeteo-Api-Integration.git`
+1. ```git clone https://github.com/BasileDM/OpenMeteo-Api-Integration.git```
 
-2. `cd OpenMeteo-Api-Integration`
+2. ```cd OpenMeteo-Api-Integration```
 
 3. Node 16.13.2 was used for this project. You can get NVM here:
     - Linux:   https://github.com/nvm-sh/nvm
     - Windows: https://github.com/coreybutler/nvm-windows
 
-4. `nvm install 16.13.2`
+4. ```nvm install 16.13.2```
 
-5. `nvm use 16.13.2`
+5. ```nvm use 16.13.2```
 
-6. `npm install`
+6. ```npm install```
 
 5. Edit the settings.json file with the city of your choice
 
-8. `npm run dev`
+8. ```npm run dev```
 
 ## Features
 
